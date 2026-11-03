@@ -42,8 +42,12 @@ class ClassifyTests(unittest.TestCase):
 
     def test_stop_guard(self) -> None:
         self.assertTrue(blocked_name("RpcSs"))
+        self.assertTrue(blocked_name("rpcss"))
+        self.assertTrue(blocked_name("Appinfo"))
+        self.assertTrue(blocked_name("TimeBrokerSvc"))
         self.assertTrue(blocked_name("CDPUserSvc_65eea7e"))
         self.assertFalse(blocked_name("Spooler"))
+        self.assertFalse(can_stop(_svc("Appinfo", state=SERVICE_RUNNING, accept_stop=True)))
         self.assertTrue(session_service("NPSMSvc_65eea7e"))
         self.assertFalse(session_service("Spooler"))
         running = _svc("Spooler", state=SERVICE_RUNNING, accept_stop=True)

@@ -71,6 +71,8 @@ NO_STOP = {
     "StateRepository",
     "SystemEventsBroker",
     "TextInputManagementService",
+    "Appinfo",
+    "TimeBrokerSvc",
     "TokenBroker",
     "UserManager",
     "VaultSvc",
@@ -82,6 +84,8 @@ NO_STOP_PREFIX = (
     "OneSyncSvc_",
     "WpnUserService_",
 )
+_NO_STOP_FOLD = {name.casefold() for name in NO_STOP}
+_NO_STOP_PREFIX_FOLD = tuple(prefix.casefold() for prefix in NO_STOP_PREFIX)
 _SESSION = re.compile(r"_[0-9a-f]{6,}$", re.I)
 
 _STATE = {
@@ -201,9 +205,10 @@ class Snap:
 
 
 def blocked_name(name: str) -> bool:
-    if name in NO_STOP:
+    key = name.casefold()
+    if key in _NO_STOP_FOLD:
         return True
-    return any(name.startswith(prefix) for prefix in NO_STOP_PREFIX)
+    return any(key.startswith(prefix) for prefix in _NO_STOP_PREFIX_FOLD)
 
 
 def session_service(name: str) -> bool:

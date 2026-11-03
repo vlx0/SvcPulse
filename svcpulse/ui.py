@@ -276,10 +276,6 @@ class SvcPulseApp(tk.Tk):
         inner.pack(fill="x", padx=12, pady=10)
         top = tk.Frame(inner, bg=CARD)
         top.pack(fill="x")
-        tk.Label(
-            top, text=svc.display, bg=CARD, fg=FG, font=("Segoe UI Semibold", 11),
-            wraplength=340, justify="left", anchor="w",
-        ).pack(side="left", fill="x", expand=True)
         if admin and can_stop(svc):
             tk.Button(
                 top, text="Остановить", command=lambda name=svc.name, title=svc.display: self._stop(name, title),
@@ -287,6 +283,10 @@ class SvcPulseApp(tk.Tk):
                 font=("Segoe UI", 8), activebackground=CARD, activeforeground=FG,
                 padx=8, pady=4,
             ).pack(side="right", padx=(8, 0))
+        tk.Label(
+            top, text=svc.display, bg=CARD, fg=FG, font=("Segoe UI Semibold", 11),
+            wraplength=340, justify="left", anchor="w",
+        ).pack(side="left", fill="x", expand=True)
         meta = svc.start_text + " · " + svc.state_text
         if svc.display != svc.name:
             meta = svc.name + " · " + meta
